@@ -74,6 +74,10 @@ const render = () => {
     deleteImage.className = 'deleteImage';
     icons.appendChild(deleteImage);
     content.appendChild(container);
+
+    deleteImage.onclick = () => {
+      removeGood(container);
+    }
   });
 }
 
@@ -106,6 +110,11 @@ const onClickButton = () => {
   inputMuch.value = '';
   calcFunction();
   getDate();
+  render();
+}
+
+const removeGood = (collection) => {
+  allGoods = allGoods.filter((item, index) => index !== Number(collection.id));
   render();
 }
 
