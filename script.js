@@ -19,30 +19,30 @@ const updateInputMuch = (event) => {
   valueInputMuch = event.target.value;
 }
 
-const render = (sumParam, dateParam) => {
+const render = () => {
   const content = document.querySelector('#content-page');
   const sum = document.querySelector('.sum');
   sum.className = 'sum';
 
-  while(sum.firstChild) {
+  while (sum.firstChild) {
     sum.removeChild(sum.firstChild);
   }
-  while(content.firstChild) {
+  while (content.firstChild) {
     content.removeChild(content.firstChild);
   }
   const containerSum = document.createElement('div');
   containerSum.className = 'containerSum';
-  containerSum.innerText = `Итого: ${sumParam} р.`;
+  containerSum.innerText = `Итого: ${calcFunction()} р.`;
   sum.appendChild(containerSum);
   allGoods.map((item, index) => {
     const container = document.createElement('div');
     container.id = index;
     container.className = 'good-container';
 
-    const {where, howMuch} = item;
+    const { where, howMuch, day } = item;
 
     const shop = document.createElement('p');
-    shop.innerText = `${index+1}) ${where}`;
+    shop.innerText = `${ index + 1 }) ${ where }`;
     shop.className = 'shop';
     container.appendChild(shop);
 
@@ -51,12 +51,12 @@ const render = (sumParam, dateParam) => {
     container.appendChild(rightBlock);
 
     const date = document.createElement('p');
-    date.innerHTML = dateParam; 
+    date.innerHTML = day; 
     date.className = 'date';
     rightBlock.appendChild(date);
 
     const cost = document.createElement('p');
-    cost.innerText = `${howMuch} р.`;
+    cost.innerText = `${ howMuch } р.`;
     cost.className = 'cost';
     rightBlock.appendChild(cost);
 
@@ -74,40 +74,39 @@ const render = (sumParam, dateParam) => {
     deleteImage.className = 'deleteImage';
     icons.appendChild(deleteImage);
     content.appendChild(container);
-
-  })
+  });
 }
 
 const getDate = () => {
   let today = new Date();
-  let dd = String(today.getDate()).padStart(2, '0');
-  let mm = String(today.getMonth() + 1).padStart(2, '0');
-  let yyyy = today.getFullYear();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear();
   today = `${dd}.${mm}.${yyyy}`;
   return today;
 }
 
 const calcFunction = () => {
-  let sum = 0;
-  allGoods.forEach(item => {
-    sum += +item.howMuch;  
-  })
+  let sum = allGoods.reduce((accum, item)=> { 
+    return accum += Number(item.howMuch);
+  }, 0);
   return sum;
 }
 
 const onClickButton = () => {
   allGoods.push({
     where: valueInputWhere,
-    howMuch: valueInputMuch
+    howMuch: valueInputMuch,
+    day: getDate()
   });
 
   valueInputWhere = '';
   valueInputMuch = '';
   inputWhere.value = '';
   inputMuch.value = '';
-  let sum = calcFunction();
-  let today = getDate();
-  render(sum, today);
+  calcFunction();
+  getDate();
+  render();
 }
 
 document.querySelector('.add-btn').addEventListener('click', onClickButton)
