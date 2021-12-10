@@ -1,0 +1,139 @@
+@media screen and (max-width: 730px) {
+  .good-container {
+    justify-content: space-between;
+    max-width: 570px;
+    width: 80%;
+  }
+  
+  .rightBlock {
+    width: 57%;
+  }
+  
+  .date, .cost, .editImage, .deleteImage {
+    margin-left: 0px;
+  }
+  
+  .cost {
+    width: 100px;
+  }
+  
+  .icons {
+    width: 45px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+  
+@media screen and (max-width: 670px) {
+  .cost {
+    width: 50px;
+  }
+  
+  .shop {
+    width: 100px;
+  }
+}
+  
+@media screen and (max-width: 640px) {
+  .main-field {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+  
+  .where-spend {
+    width: 80%;
+  }
+  
+  .much-spend {
+    width: 80%;
+    margin-top: 10px;
+  }
+  
+  .where-spend input {
+    max-width: 450px;
+    width: 98%;
+  }
+  
+  .good-container {
+    width: 70%;
+  }
+  
+  .sum {
+    margin-top: 130px;
+    width: 74%;
+  }
+  
+  .add-btn {
+    width: 120px;
+    height: 40px;
+    margin: 20px 55px 0 auto;
+    padding: 10px;
+  }
+}
+  
+@media screen and (max-width: 540px) {
+  .shop {
+    width: 80px;
+  }
+  
+  .rightBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 25%;
+  }
+  
+  .date {
+    margin-bottom: 0;
+  }
+  
+  .cost {
+    margin-top: 0;
+  } 
+}
+  
+@media screen and (max-width: 500px) {
+  .add-btn {
+    margin-right: 45px;  
+  }
+}
+  
+@media screen and (max-width: 400px) {
+  .add-btn {
+    margin-right: 37px;
+  }
+}
+  
+@media screen and (max-width: 375px) {
+  .good-container {
+    width: 90%;
+  }
+  
+  .where-spend {
+    width: 95%;
+  }
+  
+  .much-spend {
+    width: 95%;
+  }
+  
+  .add-btn {
+    margin-right: 10px;  
+  }
+  
+  .sum {
+    width: 85%
+  }
+  
+  .rightBlock {
+    width: 36%;
+  };    
+}
+  
+@media screen and (max-width: 330px) {
+  h1 {
+    font-size: 28px;
+  }
+}
+  
