@@ -87,7 +87,7 @@ const getDate = () => {
 }
 
 const calcFunction = () => {
-  let sum = allGoods.reduce((accum, item)=> { 
+  const sum = allGoods.reduce((accum, item)=> { 
     return accum += Number(item.howMuch);
   }, 0);
   return sum;
