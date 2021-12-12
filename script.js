@@ -72,12 +72,13 @@ const render = () => {
     container.appendChild(rightBlock);
 
     const date = document.createElement('p');
-    date.innerHTML = day; 
+    date.innerHTML = getDatePoint(); 
     date.className = 'date';
     rightBlock.appendChild(date);
 
     const calendar = document.createElement('input');
     calendar.type = 'date';
+    calendar.value = getDate();
     calendar.className = 'hide';
     editContainer.appendChild(calendar);
 
@@ -120,7 +121,7 @@ const render = () => {
     }
 
     cancelButton.onclick = () => {
-      cancelEdit(container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave);
+      cancelEdit(container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, editContainer);
     }
 
     buttonSave.onclick = () => {
@@ -152,6 +153,7 @@ const saveChanges = (container, cancelButton, shop, inputEditShop, rightBlock, d
   allGoods[index].day = str;
 
   container.classList.remove('editContainer');
+  container.classList.remove('indent');
   cancelButton.classList.add('hide');
   shop.classList.remove('editShop');
   inputEditShop.classList.remove('inputEditShop');
@@ -170,6 +172,7 @@ const saveChanges = (container, cancelButton, shop, inputEditShop, rightBlock, d
 
 const editFunction = (container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, editContainer) => {
   container.classList.add('editContainer');
+  container.classList.add('indent');
   cancelButton.classList.remove('hide');
   cancelButton.classList.add('cancelButton'); 
   shop.classList.add('editShop');
@@ -193,14 +196,15 @@ const editFunction = (container, cancelButton, shop, inputEditShop, rightBlock, 
   editContainer.classList.add('for-inputs');
 }
 
-const cancelEdit = (container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave) => {
+const cancelEdit = (container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, editContainer) => {
   container.classList.remove('editContainer');
+  container.classList.remove('indent');
   cancelButton.classList.add('hide');
   shop.classList.remove('editShop');
   shop.classList.remove('hide');
   inputEditShop.classList.remove('inputEditShop');
   inputEditShop.classList.add('hide');
-  rightBlock.classList.remove('editRightBlock')
+  rightBlock.classList.remove('editRightBlock');
   date.classList.remove('editDate');
   date.classList.remove('hide');
   calendar.classList.add('hide');
@@ -209,7 +213,10 @@ const cancelEdit = (container, cancelButton, shop, inputEditShop, rightBlock, da
   inputEditCost.classList.add('hide');
   inputEditCost.classList.remove('inputEditCost');
   icons.classList.remove('hide');
+  icons.classList.add('icons');
   buttonSave.classList.add('hide');
+  editContainer.classList.remove('for-inputs');
+  editContainer.classList.add('hide');
 }
 
 const getDate = () => {
@@ -217,8 +224,17 @@ const getDate = () => {
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();
-  today = `${dd}.${mm}.${yyyy}`;
+  today = `${yyyy}-${mm}-${dd}`;
   return today;
+}
+
+const getDatePoint = () => {
+  let today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear();
+  todayPoint = `${dd}.${mm}.${yyyy}`;
+  return todayPoint;
 }
 
 const onClickButton = () => {

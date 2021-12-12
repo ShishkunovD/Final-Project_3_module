@@ -182,3 +182,7 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+.indent {
+  margin-bottom: 20px;
+}

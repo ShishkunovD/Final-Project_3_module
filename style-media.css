@@ -29,10 +29,20 @@
     display: flex;
     flex-direction: column;
     height: 85px;
+    width: 100%;
+  }
+
+  .inputEditShop {
+    width: 99%;
   }
   
   .inputEditCost {
     margin-left: 0px;
+    width: 99%;
+  }
+
+  .calendar {
+    width: 100%;
   }
 
 }
@@ -74,7 +84,7 @@
   
   .sum {
     margin-top: 130px;
-    width: 74%;
+    width: 72%;
   }
   
   .add-btn {
@@ -113,8 +123,19 @@
 }
 
 @media screen and (max-width: 478px) {
-  .calendar {
-    width: 92px;
+  .cancelButton {
+    margin-bottom: 10px;
+  }
+
+  .good-container {
+    flex-wrap: wrap;
+    width: 65%;
+  }
+
+  .saveButton {
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 177px;
   }
 }
   
@@ -128,7 +149,6 @@
   .good-container {
     width: 90%;
     display: flex;
-    flex-direction: column;
   }
   
   .where-spend {
