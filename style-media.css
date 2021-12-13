@@ -2,7 +2,7 @@
   .good-container {
     justify-content: space-between;
     max-width: 570px;
-    width: 80%;
+    width: 100%;
   }
   
   .rightBlock {
@@ -22,6 +22,43 @@
     display: flex;
     justify-content: space-between;
   }
+
+  #content-page {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 697px) {
+  .for-inputs {
+    display: flex;
+    flex-direction: column;
+    height: 170px;
+    width: 100%;
+  }
+
+  .inputEditShop {
+    width: 95%;
+  }
+  
+  .inputEditCost {
+    margin-left: 0px;
+    width: 95%;
+  }
+
+  .calendar {
+    width: 95.5%;
+  }
+
+  .saveButton {
+    margin-left: 0;
+  }
+
+  #content-page {
+    width: 81%;
+    margin: 0 auto;
+  }
+
 }
   
 @media screen and (max-width: 670px) {
@@ -56,12 +93,12 @@
   }
   
   .good-container {
-    width: 70%;
+    width: 88%;
   }
   
   .sum {
     margin-top: 130px;
-    width: 74%;
+    width: 72%;
   }
   
   .add-btn {
@@ -69,6 +106,10 @@
     height: 40px;
     margin: 20px 55px 0 auto;
     padding: 10px;
+  }
+
+  .for-inputs {
+    width: 90%;
   }
 }
   
@@ -98,6 +139,27 @@
     margin-right: 45px;  
   }
 }
+
+@media screen and (max-width: 478px) {
+  .cancelButton {
+    margin-bottom: 10px;
+  }
+
+  .good-container {
+    flex-wrap: wrap;
+    width: 80%;
+  }
+
+  .inputEditShop, .calendar {
+    margin-bottom: 9px;
+  }
+
+  .saveButton {
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 177px;
+  }
+}
   
 @media screen and (max-width: 400px) {
   .add-btn {
@@ -106,10 +168,6 @@
 }
   
 @media screen and (max-width: 375px) {
-  .good-container {
-    width: 90%;
-  }
-  
   .where-spend {
     width: 95%;
   }
@@ -126,9 +184,21 @@
     width: 85%
   }
   
+  .for-inputs {
+    width: 100%;
+  }
+
   .rightBlock {
     width: 36%;
-  };    
+  }; 
+  
+  .shop {
+    color: black;
+  }
+
+  .good-container {
+    width: 100%;
+  }
 }
   
 @media screen and (max-width: 330px) {

@@ -19,6 +19,13 @@ const updateInputMuch = (event) => {
   valueInputMuch = event.target.value;
 }
 
+const calcFunction = () => {
+  const sum = allGoods.reduce((accum, item)=> { 
+    return accum += Number(item.howMuch);
+  }, 0);
+  return sum;
+}
+
 const render = () => {
   const content = document.querySelector('#content-page');
   const sum = document.querySelector('.sum');
@@ -39,26 +46,51 @@ const render = () => {
     container.id = index;
     container.className = 'good-container';
 
+    const containerEdit = document.createElement('div');
+    containerEdit.className = 'hide';
+
+
     const { where, howMuch, day } = item;
+
+    const cancelButton = document.createElement('button');
+    cancelButton.innerText = 'Отмена';
+    cancelButton.className = 'cancelButton';
+    containerEdit.appendChild(cancelButton);
 
     const shop = document.createElement('p');
     shop.innerText = `${ index + 1 }) ${ where }`;
     shop.className = 'shop';
     container.appendChild(shop);
 
+    const inputEditShop = document.createElement('input');
+    inputEditShop.value = where;
+    inputEditShop.className = 'inputEditShop';
+    containerEdit.appendChild(inputEditShop);
+
     const rightBlock = document.createElement('div');
     rightBlock.className = 'rightBlock';
     container.appendChild(rightBlock);
 
     const date = document.createElement('p');
-    date.innerHTML = day; 
+    date.innerHTML = getDatePoint(day); 
     date.className = 'date';
     rightBlock.appendChild(date);
+
+    const calendar = document.createElement('input');
+    calendar.type = 'date';
+    calendar.className = 'calendar';
+    calendar.value = getDate();
+    containerEdit.appendChild(calendar);
 
     const cost = document.createElement('p');
     cost.innerText = `${ howMuch } р.`;
     cost.className = 'cost';
     rightBlock.appendChild(cost);
+
+    const inputEditCost = document.createElement('input');
+    inputEditCost.value = howMuch;
+    inputEditCost.className = 'inputEditCost';
+    containerEdit.appendChild(inputEditCost);
 
     const icons = document.createElement('div');
     icons.className = 'icons';
@@ -73,12 +105,67 @@ const render = () => {
     deleteImage.src = 'images/delete.png';
     deleteImage.className = 'deleteImage';
     icons.appendChild(deleteImage);
+
     content.appendChild(container);
+    content.appendChild(containerEdit)
+
+    const buttonSave = document.createElement('button');
+    buttonSave.innerText = 'Сохранить';
+    buttonSave.className = 'saveButton';
+    containerEdit.appendChild(buttonSave);
 
     deleteImage.onclick = () => {
-      removeGood(container);
+      removeTask(container);
+    }
+
+    editImage.onclick = () => {
+      editFunction(container, containerEdit);
+    }
+
+    cancelButton.onclick = () => {
+      cancelEdit(container, containerEdit);
+    }
+
+    buttonSave.onclick = () => {
+      updateData(inputEditShop, inputEditCost, calendar, index);
+      saveChanges(container, containerEdit);
     }
   });
+}
+
+const removeTask = (collection) => {
+  allGoods = allGoods.filter((item, index) => index !== +collection.id);
+  render();
+}
+
+const updateData = (inputEditShop, inputEditCost, calendar, index) => {
+  allGoods[index].where = inputEditShop.value;
+  allGoods[index].howMuch = inputEditCost.value;
+  allGoods[index].day = calendar.value;
+}
+
+const saveChanges = (container, containerEdit) => {
+  container.classList.remove('indent');
+  containerEdit.classList.add('hide');
+  calcFunction();
+  render();
+}
+
+const editFunction = (container, containerEdit) => {
+  container.classList.add('editContainer');
+  container.classList.add('indent');
+  container.classList.add('hide')
+
+  containerEdit.classList.remove('hide');
+  containerEdit.classList.add('for-inputs');
+}
+
+const cancelEdit = (container, containerEdit) => {
+  container.classList.remove('editContainer');
+  container.classList.remove('hide');
+  container.classList.remove('indent');
+  containerEdit.classList.remove('for-inputs');
+  containerEdit.classList.add('hide');
 }
 
 const getDate = () => {
@@ -86,15 +173,17 @@ const getDate = () => {
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();
-  today = `${dd}.${mm}.${yyyy}`;
+  today = `${yyyy}-${mm}-${dd}`;
   return today;
 }
 
-const calcFunction = () => {
-  const sum = allGoods.reduce((accum, item)=> { 
-    return accum += Number(item.howMuch);
-  }, 0);
-  return sum;
+const getDatePoint = (day) => {
+  let today = new Date(day);
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear();
+  todayPoint = `${dd}.${mm}.${yyyy}`;
+  return todayPoint;
 }
 
 const onClickButton = () => {
@@ -113,9 +202,4 @@ const onClickButton = () => {
   render();
 }
 
-const removeGood = (collection) => {
-  allGoods = allGoods.filter((item, index) => index !== Number(collection.id));
-  render();
-}
-
-document.querySelector('.add-btn').addEventListener('click', onClickButton)
+document.querySelector('.add-btn').addEventListener('click', onClickButton);
