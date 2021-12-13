@@ -117,16 +117,19 @@ const render = () => {
     }
 
     editImage.onclick = () => {
-      editFunction(container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, editContainer);
+      editFunction(container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams);
     }
 
     cancelButton.onclick = () => {
-      cancelEdit(container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, editContainer);
+      cancelEdit(container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams);
     }
 
     buttonSave.onclick = () => {
-      saveChanges(container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, index);
+      saveChanges(container, cancelButton, shop, inputEditShop, rightBlock, index, ...arrayButtonSave);
     }
+
+    const arrayParams = [date, calendar, cost, inputEditCost, icons, buttonSave, editContainer];
+    const arrayButtonSave = [date, calendar, cost, inputEditCost, icons, buttonSave];
   });
 }
 
@@ -135,11 +138,11 @@ const removeTask = (collection) => {
   render();
 }
 
-const saveChanges = (container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, index) => {
+const saveChanges = (container, cancelButton, shop, inputEditShop, rightBlock, index, ...arrayButtonSave) => {
   allGoods[index].where = inputEditShop.value;
-  allGoods[index].howMuch = inputEditCost.value;
+  allGoods[index].howMuch = arrayButtonSave[3].value;
 
-  let newStr = calendar.value.replace(/-/gi, '.');
+  let newStr = arrayButtonSave[1].value.replace(/-/gi, '.');
   let newArray = newStr.split('.').reverse();
   let str = '';
   newArray.forEach(item => {
@@ -159,18 +162,18 @@ const saveChanges = (container, cancelButton, shop, inputEditShop, rightBlock, d
   inputEditShop.classList.remove('inputEditShop');
   inputEditShop.classList.add('hide');
   rightBlock.classList.remove('editRightBlock')
-  date.classList.remove('editDate');
-  calendar.classList.add('hide');
-  cost.classList.remove('editCost');
-  inputEditCost.classList.add('hide');
-  inputEditCost.classList.remove('inputEditCost');
-  icons.classList.remove('hide');
-  buttonSave.classList.add('hide');
+  arrayButtonSave[0].classList.remove('editDate');
+  arrayButtonSave[1].classList.add('hide');
+  arrayButtonSave[2].classList.remove('editCost');
+  arrayButtonSave[3].classList.add('hide');
+  arrayButtonSave[3].classList.remove('inputEditCost');
+  arrayButtonSave[4].classList.remove('hide');
+  arrayButtonSave[5].classList.add('hide');
   calcFunction();
   render();
 }
 
-const editFunction = (container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, editContainer) => {
+const editFunction = (container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams) => {
   container.classList.add('editContainer');
   container.classList.add('indent');
   cancelButton.classList.remove('hide');
@@ -180,23 +183,23 @@ const editFunction = (container, cancelButton, shop, inputEditShop, rightBlock, 
   inputEditShop.classList.remove('hide');
   inputEditShop.classList.add('inputEditShop');
   rightBlock.classList.add('editRightBlock');
-  date.classList.add('editDate');
-  date.classList.add('hide');
-  calendar.classList.remove('hide');
-  calendar.classList.add('calendar');
-  cost.classList.add('editCost');
-  cost.classList.add('hide');
-  inputEditCost.classList.remove('hide');
-  inputEditCost.classList.add('inputEditCost');
-  icons.classList.remove('icons');
-  icons.classList.add('hide');
-  buttonSave.classList.remove('hide');
-  buttonSave.classList.add('saveButton');
-  editContainer.classList.remove('hide');
-  editContainer.classList.add('for-inputs');
+  arrayParams[0].classList.add('editDate');
+  arrayParams[0].classList.add('hide');
+  arrayParams[1].classList.remove('hide');
+  arrayParams[1].classList.add('calendar');
+  arrayParams[2].classList.add('editCost');
+  arrayParams[2].classList.add('hide');
+  arrayParams[3].classList.remove('hide');
+  arrayParams[3].classList.add('inputEditCost');
+  arrayParams[4].classList.remove('icons');
+  arrayParams[4].classList.add('hide');
+  arrayParams[5].classList.remove('hide');
+  arrayParams[5].classList.add('saveButton');
+  arrayParams[6].classList.remove('hide');
+  arrayParams[6].classList.add('for-inputs');
 }
 
-const cancelEdit = (container, cancelButton, shop, inputEditShop, rightBlock, date, calendar, cost, inputEditCost, icons, buttonSave, editContainer) => {
+const cancelEdit = (container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams) => {
   container.classList.remove('editContainer');
   container.classList.remove('indent');
   cancelButton.classList.add('hide');
@@ -205,18 +208,18 @@ const cancelEdit = (container, cancelButton, shop, inputEditShop, rightBlock, da
   inputEditShop.classList.remove('inputEditShop');
   inputEditShop.classList.add('hide');
   rightBlock.classList.remove('editRightBlock');
-  date.classList.remove('editDate');
-  date.classList.remove('hide');
-  calendar.classList.add('hide');
-  cost.classList.remove('editCost');
-  cost.classList.remove('hide');
-  inputEditCost.classList.add('hide');
-  inputEditCost.classList.remove('inputEditCost');
-  icons.classList.remove('hide');
-  icons.classList.add('icons');
-  buttonSave.classList.add('hide');
-  editContainer.classList.remove('for-inputs');
-  editContainer.classList.add('hide');
+  arrayParams[0].classList.remove('editDate');
+  arrayParams[0].classList.remove('hide');
+  arrayParams[1].classList.add('hide');
+  arrayParams[2].classList.remove('editCost');
+  arrayParams[2].classList.remove('hide');
+  arrayParams[3].classList.add('hide');
+  arrayParams[3].classList.remove('inputEditCost');
+  arrayParams[4].classList.remove('hide');
+  arrayParams[4].classList.add('icons');
+  arrayParams[5].classList.add('hide');
+  arrayParams[6].classList.remove('for-inputs');
+  arrayParams[6].classList.add('hide');
 }
 
 const getDate = () => {
