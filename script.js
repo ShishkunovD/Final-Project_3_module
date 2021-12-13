@@ -46,16 +46,16 @@ const render = () => {
     container.id = index;
     container.className = 'good-container';
 
+    const containerEdit = document.createElement('div');
+    containerEdit.className = 'hide';
+
+
     const { where, howMuch, day } = item;
 
     const cancelButton = document.createElement('button');
     cancelButton.innerText = 'Отмена';
-    cancelButton.className = 'hide';
-    container.appendChild(cancelButton);
-
-    const editContainer = document.createElement('div');
-    editContainer.className = 'hide';
-    container.appendChild(editContainer);
+    cancelButton.className = 'cancelButton';
+    containerEdit.appendChild(cancelButton);
 
     const shop = document.createElement('p');
     shop.innerText = `${ index + 1 }) ${ where }`;
@@ -64,23 +64,23 @@ const render = () => {
 
     const inputEditShop = document.createElement('input');
     inputEditShop.value = where;
-    inputEditShop.className = 'hide';
-    editContainer.appendChild(inputEditShop);
+    inputEditShop.className = 'inputEditShop';
+    containerEdit.appendChild(inputEditShop);
 
     const rightBlock = document.createElement('div');
     rightBlock.className = 'rightBlock';
     container.appendChild(rightBlock);
 
     const date = document.createElement('p');
-    date.innerHTML = getDatePoint(); 
+    date.innerHTML = getDatePoint(day); 
     date.className = 'date';
     rightBlock.appendChild(date);
 
     const calendar = document.createElement('input');
     calendar.type = 'date';
+    calendar.className = 'calendar';
     calendar.value = getDate();
-    calendar.className = 'hide';
-    editContainer.appendChild(calendar);
+    containerEdit.appendChild(calendar);
 
     const cost = document.createElement('p');
     cost.innerText = `${ howMuch } р.`;
@@ -89,8 +89,8 @@ const render = () => {
 
     const inputEditCost = document.createElement('input');
     inputEditCost.value = howMuch;
-    inputEditCost.className = 'hide';
-    editContainer.appendChild(inputEditCost);
+    inputEditCost.className = 'inputEditCost';
+    containerEdit.appendChild(inputEditCost);
 
     const icons = document.createElement('div');
     icons.className = 'icons';
@@ -105,31 +105,31 @@ const render = () => {
     deleteImage.src = 'images/delete.png';
     deleteImage.className = 'deleteImage';
     icons.appendChild(deleteImage);
+
     content.appendChild(container);
+    content.appendChild(containerEdit)
 
     const buttonSave = document.createElement('button');
     buttonSave.innerText = 'Сохранить';
-    buttonSave.className = 'hide';
-    container.appendChild(buttonSave);
+    buttonSave.className = 'saveButton';
+    containerEdit.appendChild(buttonSave);
 
     deleteImage.onclick = () => {
       removeTask(container);
     }
 
     editImage.onclick = () => {
-      editFunction(container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams);
+      editFunction(container, containerEdit);
     }
 
     cancelButton.onclick = () => {
-      cancelEdit(container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams);
+      cancelEdit(container, containerEdit);
     }
 
     buttonSave.onclick = () => {
-      saveChanges(container, cancelButton, shop, inputEditShop, rightBlock, index, ...arrayButtonSave);
+      updateData(inputEditShop, inputEditCost, calendar, index);
+      saveChanges(container, containerEdit);
     }
-
-    const arrayParams = [date, calendar, cost, inputEditCost, icons, buttonSave, editContainer];
-    const arrayButtonSave = [date, calendar, cost, inputEditCost, icons, buttonSave];
   });
 }
 
@@ -138,88 +138,34 @@ const removeTask = (collection) => {
   render();
 }
 
-const saveChanges = (container, cancelButton, shop, inputEditShop, rightBlock, index, ...arrayButtonSave) => {
+const updateData = (inputEditShop, inputEditCost, calendar, index) => {
   allGoods[index].where = inputEditShop.value;
-  allGoods[index].howMuch = arrayButtonSave[3].value;
+  allGoods[index].howMuch = inputEditCost.value;
+  allGoods[index].day = calendar.value;
+}
 
-  let newStr = arrayButtonSave[1].value.replace(/-/gi, '.');
-  let newArray = newStr.split('.').reverse();
-  let str = '';
-  newArray.forEach(item => {
-    if(item.length !== 4) {
-      str += `${item}.`
-    } else {
-      str += item;
-    }
-  })
-  
-  allGoods[index].day = str;
-
-  container.classList.remove('editContainer');
+const saveChanges = (container, containerEdit) => {
   container.classList.remove('indent');
-  cancelButton.classList.add('hide');
-  shop.classList.remove('editShop');
-  inputEditShop.classList.remove('inputEditShop');
-  inputEditShop.classList.add('hide');
-  rightBlock.classList.remove('editRightBlock')
-  arrayButtonSave[0].classList.remove('editDate');
-  arrayButtonSave[1].classList.add('hide');
-  arrayButtonSave[2].classList.remove('editCost');
-  arrayButtonSave[3].classList.add('hide');
-  arrayButtonSave[3].classList.remove('inputEditCost');
-  arrayButtonSave[4].classList.remove('hide');
-  arrayButtonSave[5].classList.add('hide');
+  containerEdit.classList.add('hide');
   calcFunction();
   render();
 }
 
-const editFunction = (container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams) => {
+const editFunction = (container, containerEdit) => {
   container.classList.add('editContainer');
   container.classList.add('indent');
-  cancelButton.classList.remove('hide');
-  cancelButton.classList.add('cancelButton'); 
-  shop.classList.add('editShop');
-  shop.classList.add('hide');
-  inputEditShop.classList.remove('hide');
-  inputEditShop.classList.add('inputEditShop');
-  rightBlock.classList.add('editRightBlock');
-  arrayParams[0].classList.add('editDate');
-  arrayParams[0].classList.add('hide');
-  arrayParams[1].classList.remove('hide');
-  arrayParams[1].classList.add('calendar');
-  arrayParams[2].classList.add('editCost');
-  arrayParams[2].classList.add('hide');
-  arrayParams[3].classList.remove('hide');
-  arrayParams[3].classList.add('inputEditCost');
-  arrayParams[4].classList.remove('icons');
-  arrayParams[4].classList.add('hide');
-  arrayParams[5].classList.remove('hide');
-  arrayParams[5].classList.add('saveButton');
-  arrayParams[6].classList.remove('hide');
-  arrayParams[6].classList.add('for-inputs');
+  container.classList.add('hide')
+
+  containerEdit.classList.remove('hide');
+  containerEdit.classList.add('for-inputs');
 }
 
-const cancelEdit = (container, cancelButton, shop, inputEditShop, rightBlock, ...arrayParams) => {
+const cancelEdit = (container, containerEdit) => {
   container.classList.remove('editContainer');
+  container.classList.remove('hide');
   container.classList.remove('indent');
-  cancelButton.classList.add('hide');
-  shop.classList.remove('editShop');
-  shop.classList.remove('hide');
-  inputEditShop.classList.remove('inputEditShop');
-  inputEditShop.classList.add('hide');
-  rightBlock.classList.remove('editRightBlock');
-  arrayParams[0].classList.remove('editDate');
-  arrayParams[0].classList.remove('hide');
-  arrayParams[1].classList.add('hide');
-  arrayParams[2].classList.remove('editCost');
-  arrayParams[2].classList.remove('hide');
-  arrayParams[3].classList.add('hide');
-  arrayParams[3].classList.remove('inputEditCost');
-  arrayParams[4].classList.remove('hide');
-  arrayParams[4].classList.add('icons');
-  arrayParams[5].classList.add('hide');
-  arrayParams[6].classList.remove('for-inputs');
-  arrayParams[6].classList.add('hide');
+  containerEdit.classList.remove('for-inputs');
+  containerEdit.classList.add('hide');
 }
 
 const getDate = () => {
@@ -231,8 +177,8 @@ const getDate = () => {
   return today;
 }
 
-const getDatePoint = () => {
-  let today = new Date();
+const getDatePoint = (day) => {
+  let today = new Date(day);
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();

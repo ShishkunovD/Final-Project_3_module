@@ -2,7 +2,7 @@
   .good-container {
     justify-content: space-between;
     max-width: 570px;
-    width: 80%;
+    width: 100%;
   }
   
   .rightBlock {
@@ -22,27 +22,41 @@
     display: flex;
     justify-content: space-between;
   }
+
+  #content-page {
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 
 @media screen and (max-width: 697px) {
   .for-inputs {
     display: flex;
     flex-direction: column;
-    height: 85px;
+    height: 170px;
     width: 100%;
   }
 
   .inputEditShop {
-    width: 99%;
+    width: 95%;
   }
   
   .inputEditCost {
     margin-left: 0px;
-    width: 99%;
+    width: 95%;
   }
 
   .calendar {
-    width: 100%;
+    width: 95.5%;
+  }
+
+  .saveButton {
+    margin-left: 0;
+  }
+
+  #content-page {
+    width: 81%;
+    margin: 0 auto;
   }
 
 }
@@ -79,7 +93,7 @@
   }
   
   .good-container {
-    width: 70%;
+    width: 88%;
   }
   
   .sum {
@@ -92,6 +106,10 @@
     height: 40px;
     margin: 20px 55px 0 auto;
     padding: 10px;
+  }
+
+  .for-inputs {
+    width: 90%;
   }
 }
   
@@ -129,7 +147,11 @@
 
   .good-container {
     flex-wrap: wrap;
-    width: 65%;
+    width: 80%;
+  }
+
+  .inputEditShop, .calendar {
+    margin-bottom: 9px;
   }
 
   .saveButton {
@@ -146,11 +168,6 @@
 }
   
 @media screen and (max-width: 375px) {
-  .good-container {
-    width: 90%;
-    display: flex;
-  }
-  
   .where-spend {
     width: 95%;
   }
@@ -167,9 +184,21 @@
     width: 85%
   }
   
+  .for-inputs {
+    width: 100%;
+  }
+
   .rightBlock {
     width: 36%;
-  };    
+  }; 
+  
+  .shop {
+    color: black;
+  }
+
+  .good-container {
+    width: 100%;
+  }
 }
   
 @media screen and (max-width: 330px) {
