@@ -4,11 +4,18 @@ let valueInputMuch = '';
 let inputWhere = null;
 let inputMuch = null;
 
-window.onload = () => {
+window.onload = async () => {
   inputWhere = document.querySelector('#where-input');
   inputMuch = document.querySelector('#much-input');
   inputWhere.addEventListener('change', updateInputWhere);
   inputMuch.addEventListener('change', updateInputMuch);
+
+  const resp = await fetch ('http://localhost:8000/getGoods', {
+    method: 'GET'
+  })
+  const result = await resp.json();
+  allGoods = result.data;
+  render();
 }
 
 const updateInputWhere = (event) => {
@@ -48,7 +55,6 @@ const render = () => {
 
     const containerEdit = document.createElement('div');
     containerEdit.className = 'hide';
-
 
     const { where, howMuch, day } = item;
 
@@ -127,28 +133,49 @@ const render = () => {
     }
 
     buttonSave.onclick = () => {
-      updateData(inputEditShop, inputEditCost, calendar, index);
+      updateData(inputEditShop, inputEditCost, calendar, index, container);
       saveChanges(container, containerEdit);
     }
   });
 }
 
-const removeTask = (collection) => {
-  allGoods = allGoods.filter((item, index) => index !== +collection.id);
+const removeTask = async (collection) => {
+  const id = allGoods.filter((item, index) => index === +collection.id)[0]._id;
+
+  const resp = await fetch(`http://localhost:8000/deleteGood?id=${id}`, {
+    method: 'DELETE'
+  });
+  const result = await resp.json()
+  allGoods = result.data;
   render();
 }
 
-const updateData = (inputEditShop, inputEditCost, calendar, index) => {
-  allGoods[index].where = inputEditShop.value;
-  allGoods[index].howMuch = inputEditCost.value;
-  allGoods[index].day = calendar.value;
+const updateData = async (inputEditShop, inputEditCost, calendar, index, container) => {
+  
+  const id = allGoods.filter((item, index) => index === +container.id)[0]._id;
+
+  const resp = await fetch(`http://localhost:8000/updateGood?id=${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json;charset=utf-8',
+      'Access-Control-Allow-Origin' : '*'
+    },
+    body: JSON.stringify({
+      where: inputEditShop.value,
+      howMuch: Number(inputEditCost.value),
+      day: calendar.value
+    })
+  })
+
+  const result = await resp.json();
+  allGoods = result.data;
+  calcFunction();
+  render()
 }
 
 const saveChanges = (container, containerEdit) => {
   container.classList.remove('indent');
   containerEdit.classList.add('hide');
-  calcFunction();
-  render();
 }
 
 const editFunction = (container, containerEdit) => {
@@ -186,17 +213,28 @@ const getDatePoint = (day) => {
   return todayPoint;
 }
 
-const onClickButton = () => {
-  allGoods.push({
-    where: valueInputWhere,
-    howMuch: valueInputMuch,
-    day: getDate()
+const onClickButton = async () => {
+const resp = await fetch ('http://localhost:8000/createGood', {
+    method: 'POST',
+    headers: {
+      'Content-type' : 'application/json;charset=utf-8',
+      'Access-Control-Allow-Origin' : '*'
+    },
+    body: JSON.stringify({
+      where: valueInputWhere,
+      howMuch: Number(valueInputMuch),
+      day: getDate()
+    })
   });
+  
+  let result = await resp.json();
+  allGoods.push(result.data);
 
   valueInputWhere = '';
   valueInputMuch = '';
   inputWhere.value = '';
   inputMuch.value = '';
+
   calcFunction();
   getDate();
   render();
