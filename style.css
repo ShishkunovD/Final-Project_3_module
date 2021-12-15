@@ -161,7 +161,7 @@ body {
   border-radius: 5px;
 }
 
-.saveButton {
+.saveButton:hover {
   cursor: pointer;
 }
 
@@ -193,4 +193,41 @@ body {
 
 .calendar {
   width: 132px;
+}
+
+.container-edit-only {
+  max-width: 540px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.cancel-button-only {
+  background-color: red;
+  width: 80px;
+  height: 35px;
+  margin-right: 15px;
+  border: 1px solid red;
+  color: white;
+  border-radius: 5px;
+}
+
+.cancel-button-only:hover {
+  cursor: pointer;
+}
+
+.button-save-only {
+  background-color: blue;
+  width: 80px;
+  height: 35px;
+  margin-left: 15px;
+  border: 1px solid blue;
+  color: white;
+  border-radius: 5px;
+}
+
+.button-save-only:hover {
+  cursor: pointer;
 }

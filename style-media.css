@@ -111,6 +111,10 @@
   .for-inputs {
     width: 90%;
   }
+
+  .container-edit-only {
+    width: 90%;
+  }
 }
   
 @media screen and (max-width: 540px) {
@@ -133,11 +137,26 @@
     margin-top: 0;
   } 
 }
+
+@media screen and (max-width: 523px) {
+  .cancel-button-only {
+    margin-bottom: 10px;
+  }
+
+  .input-shop-only, .calendar-only, .input-cost-only {
+    height: 30px;
+  }
+
+  .button-save-only {
+    margin-left: 0px;
+  }
+}
   
 @media screen and (max-width: 500px) {
   .add-btn {
     margin-right: 45px;  
   }
+
 }
 
 @media screen and (max-width: 478px) {
@@ -158,6 +177,12 @@
     margin-top: 10px;
     margin-left: 0;
     margin-right: 177px;
+  }
+}
+
+@media screen and (max-width: 418px) {
+  .container-edit-only {
+    height: 80px;
   }
 }
   
@@ -199,8 +224,16 @@
   .good-container {
     width: 100%;
   }
+
+  .input-shop-only, .calendar-only, .input-cost-only {
+    margin-bottom: 10px;
+  }
+
+  .container-edit-only {
+    height: 130px;
+  }
 }
-  
+
 @media screen and (max-width: 330px) {
   h1 {
     font-size: 28px;
