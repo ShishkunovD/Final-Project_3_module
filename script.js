@@ -12,7 +12,7 @@ window.onload = async () => {
 
   const resp = await fetch ('http://localhost:8000/getGoods', {
     method: 'GET'
-  })
+  });
   const result = await resp.json();
   allGoods = result.data;
   render();
@@ -113,7 +113,7 @@ const render = () => {
     icons.appendChild(deleteImage);
 
     content.appendChild(container);
-    content.appendChild(containerEdit)
+    content.appendChild(containerEdit);
 
     const buttonSave = document.createElement('button');
     buttonSave.innerText = 'Сохранить';
@@ -121,7 +121,7 @@ const render = () => {
     containerEdit.appendChild(buttonSave);
 
     deleteImage.onclick = () => {
-      removeTask(container);
+      removeTask(item._id);
     }
 
     editImage.onclick = () => {
@@ -133,27 +133,22 @@ const render = () => {
     }
 
     buttonSave.onclick = () => {
-      updateData(inputEditShop, inputEditCost, calendar, index, container);
+      updateData(inputEditShop.value, inputEditCost.value, calendar, item._id);
       saveChanges(container, containerEdit);
     }
   });
 }
 
-const removeTask = async (collection) => {
-  const id = allGoods.filter((item, index) => index === +collection.id)[0]._id;
-
+const removeTask = async (id) => {
   const resp = await fetch(`http://localhost:8000/deleteGood?id=${id}`, {
     method: 'DELETE'
   });
-  const result = await resp.json()
+  const result = await resp.json();
   allGoods = result.data;
   render();
 }
 
-const updateData = async (inputEditShop, inputEditCost, calendar, index, container) => {
-  
-  const id = allGoods.filter((item, index) => index === +container.id)[0]._id;
-
+const updateData = async (inputEditShop, inputEditCost, calendar, id) => {
   const resp = await fetch(`http://localhost:8000/updateGood?id=${id}`, {
     method: 'PATCH',
     headers: {
@@ -161,8 +156,8 @@ const updateData = async (inputEditShop, inputEditCost, calendar, index, contain
       'Access-Control-Allow-Origin' : '*'
     },
     body: JSON.stringify({
-      where: inputEditShop.value,
-      howMuch: Number(inputEditCost.value),
+      where: inputEditShop,
+      howMuch: +inputEditCost,
       day: calendar.value
     })
   })
@@ -170,7 +165,7 @@ const updateData = async (inputEditShop, inputEditCost, calendar, index, contain
   const result = await resp.json();
   allGoods = result.data;
   calcFunction();
-  render()
+  render();
 }
 
 const saveChanges = (container, containerEdit) => {
@@ -181,7 +176,7 @@ const saveChanges = (container, containerEdit) => {
 const editFunction = (container, containerEdit) => {
   container.classList.add('editContainer');
   container.classList.add('indent');
-  container.classList.add('hide')
+  container.classList.add('hide');
 
   containerEdit.classList.remove('hide');
   containerEdit.classList.add('for-inputs');
@@ -227,7 +222,7 @@ const resp = await fetch ('http://localhost:8000/createGood', {
     })
   });
   
-  let result = await resp.json();
+  const result = await resp.json();
   allGoods.push(result.data);
 
   valueInputWhere = '';
