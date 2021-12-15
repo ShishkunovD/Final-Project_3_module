@@ -56,7 +56,44 @@ const render = () => {
     const containerEdit = document.createElement('div');
     containerEdit.className = 'hide';
 
+    // container for change one input
+    const containerEditOnly = document.createElement('div');
+    containerEditOnly.className = 'hide';
+
     const { where, howMuch, day } = item;
+
+    // button for cancel change one value
+    const cancelButtonOnly = document.createElement('button');
+    cancelButtonOnly.innerText = 'Отмена';
+    cancelButtonOnly.className = 'cancel-button-only';
+    containerEditOnly.appendChild(cancelButtonOnly);
+
+    // input for change only shop
+    const inputEditShopOnly = document.createElement('input');
+    inputEditShopOnly.value = where;
+    inputEditShopOnly.className = 'hide';
+    containerEditOnly.appendChild(inputEditShopOnly);
+
+    // input for change only date
+    const calendarOnly = document.createElement('input');
+    calendarOnly.type = 'date';
+    calendarOnly.value = getDate();
+    calendarOnly.className = 'hide';
+    containerEditOnly.appendChild(calendarOnly);
+
+    // input for change only cost
+    const inputEditCostOnly = document.createElement('input');
+    inputEditCostOnly.className = 'hide';
+    inputEditCostOnly.value = howMuch;
+    containerEditOnly.appendChild(inputEditCostOnly);
+
+    // button for save one change
+    const buttonSaveOnly = document.createElement('button');
+    buttonSaveOnly.innerText = 'Сохранить';
+    buttonSaveOnly.className = 'button-save-only';
+    containerEditOnly.appendChild(buttonSaveOnly);
+
+    //
 
     const cancelButton = document.createElement('button');
     cancelButton.innerText = 'Отмена';
@@ -114,11 +151,40 @@ const render = () => {
 
     content.appendChild(container);
     content.appendChild(containerEdit);
+    content.appendChild(containerEditOnly);
 
     const buttonSave = document.createElement('button');
     buttonSave.innerText = 'Сохранить';
     buttonSave.className = 'saveButton';
     containerEdit.appendChild(buttonSave);
+
+    //button for cancel editing one value
+    cancelButtonOnly.onclick = () => {
+      cancelOnlyEdit(container, containerEdit, containerEditOnly);
+    }
+
+    // for change shop using dblclick
+    shop.ondblclick = () => {
+      hideMainContainer(container, containerEdit, containerEditOnly);
+      changedOnlyShop(inputEditShopOnly, calendarOnly, inputEditCostOnly);
+    }
+
+    // for change date using dblclick
+    date.ondblclick = () => {
+      hideMainContainer(container, containerEdit, containerEditOnly);
+      changedOnlyDate(calendarOnly, inputEditShopOnly, inputEditCostOnly);
+    }
+
+    // for change cost using dbclick
+    cost.ondblclick = () => {
+      hideMainContainer(container, containerEdit, containerEditOnly);
+      changedOnlyCost(inputEditShopOnly, calendarOnly, inputEditCostOnly);
+    }
+
+    // for save one value after editing 
+    buttonSaveOnly.onclick = () => {
+      saveOnly(inputEditShopOnly.value, calendarOnly.value, inputEditCostOnly.value, item._id);
+    } 
 
     deleteImage.onclick = () => {
       removeTask(item._id);
@@ -171,6 +237,61 @@ const updateData = async (inputEditShop, inputEditCost, calendar, id) => {
 const saveChanges = (container, containerEdit) => {
   container.classList.remove('indent');
   containerEdit.classList.add('hide');
+}
+
+//for hide container and containerEdit and show containerEditOnly
+const hideMainContainer = (container, containerEdit, containerEditOnly) => {
+  containerEditOnly.classList.remove('hide');
+  containerEditOnly.classList.add('container-edit-only');
+  container.classList.add('hide');
+  containerEdit.classList.add('hide');
+}
+
+const cancelOnlyEdit = (container, containerEdit, containerEditOnly) => {
+  container.classList.remove('hide');
+  containerEdit.classList.add('hide');
+  containerEditOnly.classList.add('hide');
+  containerEditOnly.classList.remove('container-edit-only');
+}
+
+const changedOnlyShop = (inputEditShopOnly, calendarOnly, inputEditCostOnly) => {
+  inputEditShopOnly.classList.remove('hide');
+  inputEditShopOnly.classList.add('input-shop-only');
+  calendarOnly.classList.add('hide');
+  inputEditCostOnly.classList.add('hide');
+}
+
+const changedOnlyDate = (calendarOnly, inputEditShopOnly, inputEditCostOnly) => {
+  calendarOnly.classList.remove('hide');
+  calendarOnly.classList.add('calendar-only');
+  inputEditShopOnly.classList.add('hide');
+  inputEditCostOnly.classList.add('hide');
+}
+
+const changedOnlyCost = (inputEditShopOnly, calendarOnly, inputEditCostOnly) => {
+  inputEditShopOnly.classList.add('hide');
+  calendarOnly.classList.add('hide');
+  inputEditCostOnly.classList.remove('hide');
+  inputEditCostOnly.classList.add('input-cost-only')
+}
+
+const saveOnly = async (inputEditShopOnly, calendarOnly, inputEditCostOnly, id) => {
+  const resp = await fetch(`http://localhost:8000/updateGood?id=${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Access-Control-Allow-Origin': '*'
+    },
+    body: JSON.stringify({
+      where: inputEditShopOnly,
+      howMuch: +inputEditCostOnly,
+      day: calendarOnly
+    })
+  });
+  const result = await resp.json();
+  allGoods = result.data;
+  calcFunction();
+  render();
 }
 
 const editFunction = (container, containerEdit) => {
