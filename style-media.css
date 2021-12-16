@@ -1,8 +1,45 @@
+@media screen and (max-width: 1425px) {
+  .for-inputs {
+    width: 95%;
+  }
+
+  .container-edit-only {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 1125px) {
+  .rightBlock {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .where-spend input{
+    width: 300px;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .add-btn {
+    margin-left: 0px;
+  }
+
+  .much-spend {
+    margin-left: 100px;
+  }
+
+  .much-spend input {
+    width: 65%;
+  }
+}
+
 @media screen and (max-width: 730px) {
   .good-container {
     justify-content: space-between;
-    max-width: 570px;
-    width: 100%;
+    max-width: 760px;
+    width: 95%;
   }
   
   .rightBlock {
@@ -24,7 +61,7 @@
   }
 
   #content-page {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
   }
 }
@@ -68,6 +105,13 @@
   
   .shop {
     width: 100px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .button-save-only {
+    margin-left: 0px;
+
   }
 }
   
@@ -115,11 +159,23 @@
   .container-edit-only {
     width: 90%;
   }
+
+  .much-spend {
+    margin-left: 0px;
+  }
+
+  .much-spend input {
+    width: 98%;
+  }
+
+  .button-save-only {
+    margin-top: 10px;
+  }
 }
   
 @media screen and (max-width: 540px) {
   .shop {
-    width: 80px;
+    width: 175px;
   }
   
   .rightBlock {
@@ -184,6 +240,10 @@
   .container-edit-only {
     height: 80px;
   }
+
+  .shop {
+    width: 100px;
+  }
 }
   
 @media screen and (max-width: 400px) {
@@ -231,6 +291,12 @@
 
   .container-edit-only {
     height: 130px;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .button-save-only {
+    margin-top: 0px;
   }
 }
 

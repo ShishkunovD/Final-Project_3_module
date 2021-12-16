@@ -3,7 +3,8 @@ body {
 }
 
 .wrapper {
-  max-width: 800px;
+  max-width: 1520px;
+  width: 97%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -12,8 +13,8 @@ body {
 }
 
 .sum {
-  max-width: 580px;
-  width: 80%;
+  max-width: 1520px;
+  width: 95%;
   display: flex;
   justify-content: end;
   margin: 20px auto 0 auto;
@@ -24,14 +25,16 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 400px;
+  overflow-y: scroll;
 }
 
 .good-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 580px;
-  width: 100%;
+  max-width: 1510px;
+  width: 95%;
   margin: 0 auto;
 }
 
@@ -39,9 +42,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 580px;
+  max-width: 1520px;
   height: 55px;
-  width: 80%;
+  width: 100%;
 }
 
 .where-spend {
@@ -49,11 +52,13 @@ body {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  max-width: 560px;
+  width: 37%;
 }
 
 .where-spend input {
-    max-width: 300px;
-    width: 100%;
+    max-width: 550px;
+    width: 95%;
     height: 27px;
 }
 
@@ -62,10 +67,13 @@ body {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    max-width: 600px;
+    width: 100%;
 }
 
 .much-spend input {
     height: 27px;
+    width: 95%;
 }
 
 .add-btn {
@@ -77,10 +85,11 @@ body {
     border-radius: 3px;
     cursor: pointer;
     margin-top: auto;
+    margin-left: 150px;
 }
 
 .shop {
-  width: 190px;
+  width: 220px;
   word-wrap: break-word;
 }
 
@@ -88,7 +97,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 385px;
+  max-width: 770px;
   width: 100%;
 }
 
@@ -130,12 +139,12 @@ body {
 }
 
 .inputEditShop {
-  width: 90px;
+  width: 30%;
   margin-right: 10px;
 }
 
 .inputEditCost {
-  width: 90px;
+  width: 30%;
   margin-left: 10px;
 }
 
@@ -182,7 +191,7 @@ body {
 .for-inputs {
   display: flex;
   justify-content: space-between;
-  max-width: 580px;
+  max-width: 1370px;
   width: 100%;
   margin-top: 20px;
 }
@@ -196,12 +205,24 @@ body {
 }
 
 .container-edit-only {
-  max-width: 540px;
+  max-width: 1370px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 10px;
+}
+
+.input-shop-only {
+  width: 60%;
+}
+
+.calendar-only {
+  width: 60%;
+}
+
+.input-cost-only {
+  width: 60%;
 }
 
 .cancel-button-only {

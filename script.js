@@ -77,12 +77,13 @@ const render = () => {
     // input for change only date
     const calendarOnly = document.createElement('input');
     calendarOnly.type = 'date';
-    calendarOnly.value = getDate();
+    calendarOnly.value = day;
     calendarOnly.className = 'hide';
     containerEditOnly.appendChild(calendarOnly);
 
     // input for change only cost
     const inputEditCostOnly = document.createElement('input');
+    inputEditCostOnly.type = 'number';
     inputEditCostOnly.className = 'hide';
     inputEditCostOnly.value = howMuch;
     containerEditOnly.appendChild(inputEditCostOnly);
@@ -122,7 +123,7 @@ const render = () => {
     const calendar = document.createElement('input');
     calendar.type = 'date';
     calendar.className = 'calendar';
-    calendar.value = getDate();
+    calendar.value = day;
     containerEdit.appendChild(calendar);
 
     const cost = document.createElement('p');
@@ -131,6 +132,7 @@ const render = () => {
     rightBlock.appendChild(cost);
 
     const inputEditCost = document.createElement('input');
+    inputEditCost.type = 'number';
     inputEditCost.value = howMuch;
     inputEditCost.className = 'inputEditCost';
     containerEdit.appendChild(inputEditCost);
@@ -183,6 +185,11 @@ const render = () => {
 
     // for save one value after editing 
     buttonSaveOnly.onclick = () => {
+      let arrayCalendar = calendarOnly.value.split('-');
+      if(+arrayCalendar[0] < 2018 || +arrayCalendar[0] > 2022) {
+        alert('Your date must be greater than 2018 and less than 2023');
+        return false;
+      }
       saveOnly(inputEditShopOnly.value, calendarOnly.value, inputEditCostOnly.value, item._id);
     } 
 
@@ -199,6 +206,15 @@ const render = () => {
     }
 
     buttonSave.onclick = () => {
+      let arrayCalendar = calendar.value.split('-');
+      if(+arrayCalendar[0] < 2018 || +arrayCalendar[0] > 2022) {
+        alert('Your date must be greater than 2018 and less than 2023');
+        return false;
+      }
+      // if(+valueInputCost === 0 || Number(valueInputCost) < 0) {
+      //   alert('Your cost should be greater than 0');
+      //   return false;
+      // }
       updateData(inputEditShop.value, inputEditCost.value, calendar, item._id);
       saveChanges(container, containerEdit);
     }
@@ -276,6 +292,14 @@ const changedOnlyCost = (inputEditShopOnly, calendarOnly, inputEditCostOnly) => 
 }
 
 const saveOnly = async (inputEditShopOnly, calendarOnly, inputEditCostOnly, id) => {
+  if(inputEditShopOnly.trim().length === 0) {
+    alert('Please, enter value.');
+    return false;
+  };
+  if(+inputEditCostOnly === 0 || Number(inputEditCostOnly) < 0) {
+    alert('Your cost should be greater than 0');
+    return false;
+  }
   const resp = await fetch(`http://localhost:8000/updateGood?id=${id}`, {
     method: 'PATCH',
     headers: {
@@ -330,6 +354,14 @@ const getDatePoint = (day) => {
 }
 
 const onClickButton = async () => {
+if(valueInputWhere.trim().length === 0) {
+  alert('Please, enter value.');
+  return false;
+};
+if(+valueInputMuch === 0 || Number(valueInputMuch) < 0) {
+  alert('Your cost should be greater than 0');
+  return false;
+}
 const resp = await fetch ('http://localhost:8000/createGood', {
     method: 'POST',
     headers: {
